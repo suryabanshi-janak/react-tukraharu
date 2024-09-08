@@ -50,19 +50,6 @@ const navVariants: Variants = {
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
 
-  // const containerControls = useAnimationControls();
-  // const svgControls = useAnimationControls();
-
-  // useEffect(() => {
-  //   if (isOpen) {
-  //     containerControls.start('open');
-  //     svgControls.start('open');
-  //   } else {
-  //     containerControls.start('closed');
-  //     svgControls.start('closed');
-  //   }
-  // }, [containerControls, isOpen, svgControls]);
-
   const onToggleSidebar = () => setIsOpen((prev) => !prev);
 
   return (
@@ -87,7 +74,6 @@ export default function Sidebar() {
             >
               <motion.path
                 variants={svgVariants}
-                animate={isOpen ? 'open' : 'closed'}
                 strokeLinejoin='round'
                 d='M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3'
                 transition={{
@@ -100,19 +86,19 @@ export default function Sidebar() {
         </div>
 
         <div className='flex flex-col gap-3'>
-          <NavigationLink name='Dashboard' isOpen={isOpen}>
+          <NavigationLink name='Dashboard'>
             <ChartBarIcon className='stroke-inherit stroke-[0.75] min-w-8 w-8' />
           </NavigationLink>
-          <NavigationLink name='Projects' isOpen={isOpen}>
+          <NavigationLink name='Projects'>
             <Square2StackIcon className='stroke-inherit stroke-[0.75] min-w-8 w-8' />
           </NavigationLink>
-          <NavigationLink name='Tasks' isOpen={isOpen}>
+          <NavigationLink name='Tasks'>
             <DocumentCheckIcon className='stroke-inherit stroke-[0.75] min-w-8 w-8' />
           </NavigationLink>
-          <NavigationLink name='Reporting' isOpen={isOpen}>
+          <NavigationLink name='Reporting'>
             <ChartPieIcon className='stroke-inherit stroke-[0.75] min-w-8 w-8' />
           </NavigationLink>
-          <NavigationLink name='Users' isOpen={isOpen}>
+          <NavigationLink name='Users'>
             <UsersIcon className='stroke-inherit stroke-[0.75] min-w-8 w-8' />
           </NavigationLink>
         </div>
@@ -134,11 +120,9 @@ export default function Sidebar() {
 function NavigationLink({
   children,
   name,
-  isOpen,
 }: {
   children: React.ReactNode;
   name: string;
-  isOpen: boolean;
 }) {
   return (
     <a
@@ -148,14 +132,14 @@ function NavigationLink({
       {children}
       <motion.p
         variants={navVariants}
-        animate={isOpen ? 'open' : 'closed'}
         transition={{
           duration: 0.5,
           ease: 'easeInOut',
+          y: { stiffness: 1000 },
         }}
         className='tracking-wide text-inherit font-poppins overflow-clip whitespace-nowrap'
       >
-        {isOpen ? name : ''}
+        {name}
       </motion.p>
     </a>
   );
